@@ -1,0 +1,41 @@
+{
+    // Docker Image for WasmEdge
+    "image": "wasmedge/wasmedge:ubuntu-build-gcc",
+    "features": {
+        // Install a set of common command line utilities, and set up a non-root user.
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": "false",
+            "remoteUser": "vscode",
+            "updateRemoteUserUID": true,
+            "upgradePackages": "true"
+        },
+        // Install an up-to-date version of Git, built from source as needed.
+        "ghcr.io/devcontainers/features/git:1": {
+            "version": "latest",
+            "ppa": "false"
+        },
+        "ghcr.io/devcontainers/features/rust:1": {},
+        "ghcr.io/devcontainers/features/java:1": {
+            "version": "25",
+            "jdkDistro": "tem",
+            "installMaven": "true"
+        }
+    },
+    "remoteUser": "vscode",
+    "onCreateCommand": {
+        // Install latest WasmEdge: https://wasmedge.org/docs/start/install
+        "WasmEdge": "curl -sSf https://raw.githubusercontent.com/WasmEdge/WasmEdge/master/utils/install.sh | bash",
+        // Install latest Wasmtime: https://docs.wasmtime.dev/cli-install.html
+        "wasmtime": "curl https://wasmtime.dev/install.sh -sSf | bash",
+        // Install latest Wasmer: https://docs.wasmer.io/install
+        "wasmer": "curl https://get.wasmer.io -sSfL | bash",
+        // Install latest Rust toolchain
+        "rust": "rustup target add wasm32-unknown-unknown"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+            ]
+        }
+    }
+}
