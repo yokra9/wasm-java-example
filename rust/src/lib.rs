@@ -64,14 +64,10 @@ pub extern "C" fn count_kana(ptr: i32, len: i32) -> i32 {
     };
 
     for ch in s.chars() {
-        let code = ch as u32;
-
-        if (0x3040..=0x309F).contains(&code) {
-            // ひらがな
-            result.hiragana += 1;
-        } else if (0x30A0..=0x30FF).contains(&code) {
-            // 全角カナ
-            result.katakana += 1;
+        match ch as u32 {
+            0x3040..=0x309F => result.hiragana += 1,
+            0x30A0..=0x30FF => result.katakana += 1,
+            _ => {}
         }
     }
 
