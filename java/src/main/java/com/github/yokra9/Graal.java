@@ -3,13 +3,23 @@ package com.github.yokra9;
 import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Scanner;
 import org.graalvm.polyglot.*;
 
 public class Graal {
     public static void main(String[] args) {
         System.out.println("os.name\t" + System.getProperty("os.name"));
         System.out.println("os.arch\t" + System.getProperty("os.arch"));
+        try (Scanner scanner = new Scanner(System.in)) {
+            while (true) {
+                executeWasm();
+                System.out.println("\nPress Enter to continue (Ctrl-C to exit)...");
+                scanner.nextLine();
+            }
+        }
+    }
 
+    private static void executeWasm() {
         try (Context context = Context.create()) {
             File wasmFile = new File("count_kana.wasm");
             Value module = context.eval(Source.newBuilder("wasm", wasmFile).build());

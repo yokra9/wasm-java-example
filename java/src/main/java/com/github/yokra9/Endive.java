@@ -1,6 +1,7 @@
 package com.github.yokra9;
 
 import java.io.File;
+import java.util.Scanner;
 import run.endive.wasm.Parser;
 import run.endive.runtime.*;
 
@@ -9,6 +10,16 @@ public class Endive {
         System.out.println("os.name\t" + System.getProperty("os.name"));
         System.out.println("os.arch\t" + System.getProperty("os.arch"));
 
+        try (Scanner scanner = new Scanner(System.in)) {
+            while (true) {
+                executeWasm();
+                System.out.println("\nPress Enter to continue (Ctrl-C to exit)...");
+                scanner.nextLine();
+            }
+        }
+    }
+
+    private static void executeWasm() {
         Instance instance = Instance.builder(Parser.parse(new File("count_kana.wasm"))).build();
 
         ExportFunction alloc = instance.export("alloc");
